@@ -15,7 +15,7 @@ import { UpdateCardExpenseDto } from './dto/update-card-expense.dto';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FilesInterceptor } from '@nestjs/platform-express';
 
-@Controller('card-expense')
+@Controller('card-expenses')
 @ApiTags('Card Expense')
 export class CardExpenseController {
   constructor(private readonly cardExpenseService: CardExpenseService) {}

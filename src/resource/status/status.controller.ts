@@ -12,7 +12,7 @@ import { CreateStatusDto } from './dto/create-status.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('status')
+@Controller('statuses')
 @ApiTags('Status')
 export class StatusController {
   constructor(private readonly statusService: StatusService) {}

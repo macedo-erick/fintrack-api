@@ -12,7 +12,7 @@ import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('expense')
+@Controller('expenses')
 @ApiTags('Expense')
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
@@ -22,12 +22,12 @@ export class ExpenseController {
     return this.expenseService.create(createExpenseDto);
   }
 
-  @Get()
-  findAll() {
-    return this.expenseService.findAll();
+  @Get('')
+  findAll(@Query('month') month: number, @Query('year') year: number) {
+    return this.expenseService.findAllByMonthAndYear(month, year);
   }
 
-  @Get(':id')
+  @Get('/:id')
   findOne(@Param('id') id: string) {
     return this.expenseService.findOne(id);
   }

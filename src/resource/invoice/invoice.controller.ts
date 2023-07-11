@@ -12,7 +12,7 @@ import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('invoice')
+@Controller('invoices')
 @ApiTags('Invoice')
 export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
@@ -40,5 +40,10 @@ export class InvoiceController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.invoiceService.remove(id);
+  }
+
+  @Get('/card/:cardId')
+  findAllByCard(@Param('cardId') cardId: string) {
+    return this.invoiceService.findAllByCard(cardId);
   }
 }
