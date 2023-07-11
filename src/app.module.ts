@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CardModule } from './resource/card/card.module';
 import { InvoiceModule } from './resource/invoice/invoice.module';
-import { CardExpenseModule } from './resource/card-expense/card-expense.module';
 import { ExpenseModule } from './resource/expense/expense.module';
 import { TagModule } from './resource/tag/tag.module';
 import { UserModule } from './resource/user/user.module';
@@ -18,7 +17,6 @@ config();
   imports: [
     MongooseModule.forRoot(process.env.DB_URL),
     ExpenseModule,
-    CardExpenseModule,
     InvoiceModule,
     CardModule,
     TagModule,

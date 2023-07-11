@@ -6,7 +6,7 @@ export type InvoiceDocument = HydratedDocument<Invoice>;
 @Schema()
 export class Invoice {
   @Prop()
-  card: string;
+  cardId: string;
 
   @Prop()
   value: number;

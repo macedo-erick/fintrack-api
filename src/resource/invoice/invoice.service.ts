@@ -31,7 +31,7 @@ export class InvoiceService {
     return this.invoiceModel.deleteOne({ _id });
   }
 
-  async findAllByCard(card: string): Promise<Invoice[]> {
-    return this.invoiceModel.find({ card });
+  findAllByCardId(cardId: string): Promise<Invoice[]> {
+    return this.invoiceModel.find({ card: cardId });
   }
 }

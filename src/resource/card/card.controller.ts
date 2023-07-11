@@ -43,7 +43,7 @@ export class CardController {
   }
 
   @Get('/user/:userId')
-  findAllByUser(@Param('userId') userId: string) {
-    return this.cardService.findAllByUser(userId);
+  findAllByUserId(@Param('userId') userId: string) {
+    return this.cardService.findAllByUserId(userId);
   }
 }

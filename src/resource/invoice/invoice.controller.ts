@@ -43,7 +43,7 @@ export class InvoiceController {
   }
 
   @Get('/card/:cardId')
-  findAllByCard(@Param('cardId') cardId: string) {
-    return this.invoiceService.findAllByCard(cardId);
+  findAllByCardId(@Param('cardId') cardId: string) {
+    return this.invoiceService.findAllByCardId(cardId);
   }
 }

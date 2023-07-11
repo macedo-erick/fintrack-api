@@ -3,7 +3,7 @@ import { S3 } from 'aws-sdk';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
-export class FileService {
+export class AttachmentService {
   private readonly s3: S3;
   private readonly bucketName = process.env.AWS_BUCKET_NAME;
   private readonly region = process.env.AWS_DEFAULT_REGION;

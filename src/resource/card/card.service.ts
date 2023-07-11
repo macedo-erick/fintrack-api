@@ -17,10 +17,6 @@ export class CardService {
     return this.cardModel.find().exec();
   }
 
-  findAllByUser(user: string): Promise<Card[]> {
-    return this.cardModel.find({ user }).exec();
-  }
-
   findOne(id: string): Promise<Card> {
     return this.cardModel.findById(id);
   }
@@ -31,5 +27,9 @@ export class CardService {
 
   remove(_id: string) {
     return this.cardModel.deleteOne({ _id });
+  }
+
+  findAllByUserId(userId: string): Promise<Card[]> {
+    return this.cardModel.find({ user: userId }).exec();
   }
 }

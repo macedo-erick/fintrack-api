@@ -44,14 +44,4 @@ export class CategoryController {
   remove(@Param('id') id: string) {
     return this.categoryService.remove(id);
   }
-
-  @Get('/user/:userId')
-  findAllCategoriesForUser(@Param('userId') userId: string) {
-    return this.categoryService.findAllCategoriesForUser(userId);
-  }
-
-  @Delete('/user/:userId')
-  removeCategoriesForUser(@Param('userId') userId: string) {
-    return this.categoryService.removeCategoriesForUser(userId);
-  }
 }

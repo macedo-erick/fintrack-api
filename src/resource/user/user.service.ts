@@ -21,14 +21,10 @@ export class UserService {
       .exec();
 
     if (!user) {
-      const createdUser = await new this.userModel({
+      return new this.userModel({
         ...createUserDto,
         password: this.encryptService.encrypt(createUserDto.password),
       }).save();
-
-      await this.categoryService.createDefaultCategoriesForUser(createdUser.id);
-
-      return createdUser;
     }
 
     throw new HttpException(

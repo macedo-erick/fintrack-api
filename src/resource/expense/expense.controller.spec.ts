@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ExpenseController } from './expense.controller';
 import { ExpenseService } from './expense.service';
 
-describe('ExpenseController', () => {
+describe('CardExpenseController', () => {
   let controller: ExpenseController;
 
   beforeEach(async () => {
