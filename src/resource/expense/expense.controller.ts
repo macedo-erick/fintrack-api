@@ -7,39 +7,55 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('expenses')
 @ApiTags('Expense')
 export class ExpenseController {
-  constructor(private readonly expenseService: ExpenseService) {}
+  constructor(private readonly cardExpenseService: ExpenseService) {}
 
   @Post()
-  create(@Body() createExpenseDto: CreateExpenseDto) {
-    return this.expenseService.create(createExpenseDto);
+  @UseInterceptors(FilesInterceptor('attachments'))
+  @ApiConsumes('multipart/form-data')
+  create(
+    @Body() createCardExpenseDto: CreateExpenseDto,
+    @UploadedFiles() attachments: Array<Express.Multer.File>,
+  ) {
+    return this.cardExpenseService.create(createCardExpenseDto, attachments);
   }
 
-  @Get('')
-  findAll(@Query('month') month: number, @Query('year') year: number) {
-    return this.expenseService.findAllByMonthAndYear(month, year);
-  }
-
-  @Get('/:id')
+  @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.expenseService.findOne(id);
+    return this.cardExpenseService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExpenseDto: UpdateExpenseDto) {
-    return this.expenseService.update(id, updateExpenseDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateCardExpenseDto: UpdateExpenseDto,
+  ) {
+    return this.cardExpenseService.update(id, updateCardExpenseDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.expenseService.remove(id);
+    return this.cardExpenseService.remove(id);
+  }
+
+  @Get('/invoice/:invoiceId')
+  findAllByInvoiceId(@Param('invoiceId') invoiceId: string) {
+    return this.cardExpenseService.findAllByInvoiceId(invoiceId);
+  }
+
+  @Get('')
+  findAllByPeriod(@Query('month') month: number, @Query('year') year: number) {
+    return this.cardExpenseService.findAllByPeriod(month, year);
   }
 }

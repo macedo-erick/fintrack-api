@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type ExpenseDocument = HydratedDocument<Expense>;
+export type CardExpenseType = HydratedDocument<Expense>;
 
 @Schema()
 export class Expense {
@@ -18,13 +18,22 @@ export class Expense {
   category: string;
 
   @Prop()
-  tags: string[];
+  userId: string;
+
+  @Prop()
+  tags?: string[];
 
   @Prop()
   attachments?: string[];
 
   @Prop()
-  fixed: boolean;
+  installments?: number;
+
+  @Prop()
+  fixed?: boolean;
+
+  @Prop()
+  invoiceId?: string;
 }
 
-export const ExpenseSchema = SchemaFactory.createForClass(Expense);
+export const CardExpenseSchema = SchemaFactory.createForClass(Expense);
