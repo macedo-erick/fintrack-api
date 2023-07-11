@@ -30,4 +30,15 @@ export class ExpenseService {
   remove(_id: string) {
     return this.expenseModel.deleteOne({ _id });
   }
+
+  findAllByMonthAndYear(month: number, year: number): Promise<Expense[]> {
+    return this.expenseModel
+      .find({
+        date: {
+          $gte: new Date(year, month - 1, 1),
+          $lt: new Date(year, month, 1),
+        },
+      })
+      .exec();
+  }
 }

@@ -30,4 +30,8 @@ export class InvoiceService {
   remove(_id: string) {
     return this.invoiceModel.deleteOne({ _id });
   }
+
+  async findAllByCard(card: string): Promise<Invoice[]> {
+    return this.invoiceModel.find({ card });
+  }
 }
