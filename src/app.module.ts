@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { config } from 'dotenv';
 import { EncryptService } from './shared/service/encrypt/encrypt.service';
+import { StatusModule } from './resource/status/status.module';
 
 config();
 
@@ -23,6 +24,7 @@ config();
     TagModule,
     UserModule,
     CategoryModule,
+    StatusModule,
   ],
   controllers: [],
   providers: [EncryptService, EncryptService],

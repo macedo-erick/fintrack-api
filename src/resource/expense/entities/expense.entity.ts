@@ -15,13 +15,13 @@ export class Expense {
   date: Date;
 
   @Prop()
-  category: number;
+  category: string;
 
   @Prop()
   tags: string[];
 
   @Prop()
-  attachments: string[];
+  attachments?: string[];
 
   @Prop()
   fixed: boolean;

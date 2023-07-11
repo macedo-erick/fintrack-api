@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -43,5 +43,15 @@ export class CategoryController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoryService.remove(id);
+  }
+
+  @Get('/user/:userId')
+  findAllCategoriesForUser(@Param('userId') userId: string) {
+    return this.categoryService.findAllCategoriesForUser(userId);
+  }
+
+  @Delete('/user/:userId')
+  removeCategoriesForUser(@Param('userId') userId: string) {
+    return this.categoryService.removeCategoriesForUser(userId);
   }
 }

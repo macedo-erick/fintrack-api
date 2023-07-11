@@ -1,4 +1,4 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type CardExpenseType = HydratedDocument<CardExpense>;
@@ -9,7 +9,7 @@ export class CardExpense {
   description: string;
 
   @Prop()
-  value: string;
+  value: number;
 
   @Prop()
   date: Date;
@@ -21,7 +21,7 @@ export class CardExpense {
   tags: string[];
 
   @Prop()
-  attachments: string[];
+  attachments?: string[];
 
   @Prop()
   installments: number;

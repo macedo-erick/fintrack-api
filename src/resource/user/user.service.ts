@@ -5,12 +5,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import { EncryptService } from '../../shared/service/encrypt/encrypt.service';
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private encryptService: EncryptService,
+    private categoryService: CategoryService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -19,10 +21,14 @@ export class UserService {
       .exec();
 
     if (!user) {
-      return new this.userModel({
+      const createdUser = await new this.userModel({
         ...createUserDto,
         password: this.encryptService.encrypt(createUserDto.password),
       }).save();
+
+      await this.categoryService.createDefaultCategoriesForUser(createdUser.id);
+
+      return createdUser;
     }
 
     throw new HttpException(

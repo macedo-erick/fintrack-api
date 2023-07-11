@@ -30,4 +30,24 @@ export class CategoryService {
   remove(_id: string) {
     return this.categoryModel.deleteOne({ _id });
   }
+
+  async createDefaultCategoriesForUser(userId: string): Promise<Category[]> {
+    const defaultCategories: Category[] = await this.categoryModel
+      .find({ user: { $eq: null } })
+      .exec();
+
+    return Promise.all(
+      defaultCategories.map((category) => {
+        return this.create({ description: category.description, user: userId });
+      }),
+    );
+  }
+
+  findAllCategoriesForUser(user: string): Promise<Category[]> {
+    return this.categoryModel.find({ user });
+  }
+
+  removeCategoriesForUser(userId: string) {
+    return this.categoryModel.deleteMany({ user: userId });
+  }
 }

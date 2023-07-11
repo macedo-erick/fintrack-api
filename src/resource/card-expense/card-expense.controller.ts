@@ -1,16 +1,19 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CardExpenseService } from './card-expense.service';
 import { CreateCardExpenseDto } from './dto/create-card-expense.dto';
 import { UpdateCardExpenseDto } from './dto/update-card-expense.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('card-expense')
 @ApiTags('Card Expense')
@@ -18,8 +21,13 @@ export class CardExpenseController {
   constructor(private readonly cardExpenseService: CardExpenseService) {}
 
   @Post()
-  create(@Body() createCardExpenseDto: CreateCardExpenseDto) {
-    return this.cardExpenseService.create(createCardExpenseDto);
+  @UseInterceptors(FilesInterceptor('attachments'))
+  @ApiConsumes('multipart/form-data')
+  create(
+    @Body() createCardExpenseDto: CreateCardExpenseDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    return this.cardExpenseService.create(createCardExpenseDto, files);
   }
 
   @Get()
@@ -43,5 +51,10 @@ export class CardExpenseController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cardExpenseService.remove(id);
+  }
+
+  @Get('/invoice/:invoiceId')
+  findAllByInvoice(@Param('invoiceId') invoiceId: string) {
+    return this.cardExpenseService.findAllByInvoice(invoiceId);
   }
 }

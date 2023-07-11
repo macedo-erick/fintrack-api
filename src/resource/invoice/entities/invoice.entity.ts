@@ -18,7 +18,7 @@ export class Invoice {
   dueDate: Date;
 
   @Prop()
-  status: number;
+  status: string;
 }
 
 export const InvoiceSchema = SchemaFactory.createForClass(Invoice);

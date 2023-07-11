@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { CardService } from './card.service';
 import { CreateCardDto } from './dto/create-card.dto';
@@ -27,9 +27,9 @@ export class CardController {
     return this.cardService.findAll();
   }
 
-  @Get('/user/:user')
-  findAllByUser(@Param('user') user: string) {
-    return this.cardService.findAllByUser(user);
+  @Get('/user/:userId')
+  findAllByUser(@Param('userId') userId: string) {
+    return this.cardService.findAllByUser(userId);
   }
 
   @Get(':id')
