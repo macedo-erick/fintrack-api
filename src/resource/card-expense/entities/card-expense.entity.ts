@@ -21,10 +21,10 @@ export class CardExpense {
   tags: string[];
 
   @Prop()
-  attachment: string;
+  attachments: string[];
 
   @Prop()
-  installments: string;
+  installments: number;
 
   @Prop()
   invoice: string;

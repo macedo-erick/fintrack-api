@@ -21,7 +21,7 @@ export class Expense {
   tags: string[];
 
   @Prop()
-  attachment: string;
+  attachments: string[];
 
   @Prop()
   fixed: boolean;
