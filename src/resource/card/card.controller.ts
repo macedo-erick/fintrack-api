@@ -12,7 +12,7 @@ import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('card')
+@Controller('cards')
 @ApiTags('Card')
 export class CardController {
   constructor(private readonly cardService: CardService) {}
@@ -25,11 +25,6 @@ export class CardController {
   @Get()
   findAll() {
     return this.cardService.findAll();
-  }
-
-  @Get('/user/:userId')
-  findAllByUser(@Param('userId') userId: string) {
-    return this.cardService.findAllByUser(userId);
   }
 
   @Get(':id')
@@ -45,5 +40,10 @@ export class CardController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cardService.remove(id);
+  }
+
+  @Get('/user/:userId')
+  findAllByUser(@Param('userId') userId: string) {
+    return this.cardService.findAllByUser(userId);
   }
 }
