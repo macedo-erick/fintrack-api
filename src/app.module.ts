@@ -1,0 +1,30 @@
+import { Module } from '@nestjs/common';
+import { CardModule } from './resource/card/card.module';
+import { InvoiceModule } from './resource/invoice/invoice.module';
+import { CardExpenseModule } from './resource/card-expense/card-expense.module';
+import { ExpenseModule } from './resource/expense/expense.module';
+import { TagModule } from './resource/tag/tag.module';
+import { UserModule } from './resource/user/user.module';
+import { CategoryModule } from './resource/category/category.module';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import { config } from 'dotenv';
+import { EncryptService } from './shared/service/encrypt/encrypt.service';
+
+config();
+
+@Module({
+  imports: [
+    MongooseModule.forRoot(process.env.DB_URL),
+    ExpenseModule,
+    CardExpenseModule,
+    InvoiceModule,
+    CardModule,
+    TagModule,
+    UserModule,
+    CategoryModule,
+  ],
+  controllers: [],
+  providers: [EncryptService, EncryptService],
+})
+export class AppModule {}
