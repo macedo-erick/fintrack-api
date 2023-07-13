@@ -1,4 +1,4 @@
-import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type TagDocument = HydratedDocument<Tag>;

@@ -15,7 +15,7 @@ export class Card {
   dueDate: number;
 
   @Prop()
-  userId: string;
+  userId?: string;
 }
 
 export const CardSchema = SchemaFactory.createForClass(Card);

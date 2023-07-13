@@ -11,6 +11,7 @@ import { CardService } from './card.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from '../../shared/decorator/user/user.decorator';
 
 @Controller('cards')
 @ApiTags('Card')
@@ -18,13 +19,13 @@ export class CardController {
   constructor(private readonly cardService: CardService) {}
 
   @Post()
-  create(@Body() createCardDto: CreateCardDto) {
-    return this.cardService.create(createCardDto);
+  create(@User() userId: string, @Body() createCardDto: CreateCardDto) {
+    return this.cardService.create({ ...createCardDto, userId });
   }
 
   @Get()
-  findAll() {
-    return this.cardService.findAll();
+  findAll(@User() userId: string): Promise<CreateCardDto[]> {
+    return this.cardService.findAll(userId);
   }
 
   @Get(':id')
@@ -40,10 +41,5 @@ export class CardController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cardService.remove(id);
-  }
-
-  @Get('/user/:userId')
-  findAllByUserId(@Param('userId') userId: string) {
-    return this.cardService.findAllByUserId(userId);
   }
 }

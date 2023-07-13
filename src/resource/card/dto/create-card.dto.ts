@@ -1,3 +1,5 @@
-import { Card } from '../entities/card.entity';
-
-export class CreateCardDto extends Card {}
+export class CreateCardDto {
+  description: string;
+  closeDate: number;
+  dueDate: number;
+}

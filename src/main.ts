@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from './resource/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,11 +20,21 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
+
+  const paths = Object.keys(document.paths).sort();
+
+  document.paths = paths.reduce((acc, path) => {
+    acc[path] = document.paths[path];
+    return acc;
+  }, {});
+
   SwaggerModule.setup('api/v1/swagger', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalGuards(new AuthGuard(new JwtService(), new Reflector()));
+  app.use(cookieParser());
 
   await app.listen(3000);
 }
+
 bootstrap();

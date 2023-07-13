@@ -8,6 +8,7 @@ import { AuthDto } from './dto/auth.dto';
 import { EncryptService } from '../../shared/service/encrypt/encrypt.service';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(authDto: AuthDto) {
+  async signIn(authDto: AuthDto, res: Response) {
     const user = await this.userService.findByEmail(authDto.email);
 
     if (!user)
@@ -38,10 +39,20 @@ export class AuthService {
 
     const payload = { id: user.id, email: user.email };
 
-    return { access_token: await this.jwtService.signAsync(payload) };
+    const jwt = await this.jwtService.signAsync(payload);
+
+    res.cookie('SESSION_ID', jwt);
+
+    return res.status(200).send({
+      access_token: jwt,
+      expires_in: parseInt(process.env.JWT_EXPIRES),
+      token_type: 'Bearer',
+    });
   }
 
-  signOff(id: number) {
-    return `This action removes a #${id} auth`;
+  signOut(res: Response) {
+    res.cookie('SESSION_ID', null);
+
+    return res.status(200).send({ message: 'User signed out successfully' });
   }
 }
