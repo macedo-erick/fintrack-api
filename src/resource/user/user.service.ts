@@ -31,6 +31,7 @@ export class UserService {
       {
         status: HttpStatus.BAD_REQUEST,
         error: 'User already exists for given email',
+        timestamp: new Date().getTime(),
       },
       HttpStatus.BAD_REQUEST,
     );
@@ -50,5 +51,9 @@ export class UserService {
 
   remove(_id: string) {
     return this.userModel.deleteOne({ _id });
+  }
+
+  findByEmail(email: string) {
+    return this.userModel.findOne({ email });
   }
 }

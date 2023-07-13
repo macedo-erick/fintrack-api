@@ -8,14 +8,20 @@ import { CategoryModule } from './resource/category/category.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { config } from 'dotenv';
-import { EncryptService } from './shared/service/encrypt/encrypt.service';
 import { StatusModule } from './resource/status/status.module';
+import { AuthModule } from './resource/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 config();
 
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.DB_URL),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: parseInt(process.env.JWT_EXPIRES) },
+    }),
     ExpenseModule,
     InvoiceModule,
     CardModule,
@@ -23,8 +29,9 @@ config();
     UserModule,
     CategoryModule,
     StatusModule,
+    AuthModule,
   ],
   controllers: [],
-  providers: [EncryptService, EncryptService],
+  providers: [],
 })
 export class AppModule {}
