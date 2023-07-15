@@ -1,16 +1,18 @@
 import { Module } from '@nestjs/common';
-import { CardModule } from './resource/card/card.module';
-import { InvoiceModule } from './resource/invoice/invoice.module';
-import { ExpenseModule } from './resource/expense/expense.module';
-import { TagModule } from './resource/tag/tag.module';
-import { UserModule } from './resource/user/user.module';
-import { CategoryModule } from './resource/category/category.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { config } from 'dotenv';
-import { StatusModule } from './resource/status/status.module';
-import { AuthModule } from './resource/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ExpenseModule } from './modules/expense/expense.module';
+import { InvoiceModule } from './modules/invoice/invoice.module';
+import { TagModule } from './modules/tag/tag.module';
+import { CardModule } from './modules/card/card.module';
+import { UserModule } from './modules/user/user.module';
+import { CategoryModule } from './modules/category/category.module';
+import { StatusModule } from './modules/status/status.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { EncryptModule } from './common/modules/encrypt.module';
+import { AttachmentModule } from './common/modules/attachment.module';
 
 config();
 
@@ -30,6 +32,8 @@ config();
     CategoryModule,
     StatusModule,
     AuthModule,
+    EncryptModule,
+    AttachmentModule,
   ],
   controllers: [],
   providers: [],

@@ -2,9 +2,9 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { AuthGuard } from './resource/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import * as cookieParser from 'cookie-parser';
+import { AuthGuard } from './modules/auth/guards/auth.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
