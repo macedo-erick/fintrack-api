@@ -15,10 +15,7 @@ export class CardService {
   }
 
   findAll(userId: string): Promise<CreateCardDto[]> {
-    return this.cardModel
-      .find({ userId })
-      .lean()
-      .then((cards) => cards.map(({ userId, ...card }) => card));
+    return this.cardModel.find({ userId });
   }
 
   findOne(id: string): Promise<Card> {
