@@ -11,6 +11,7 @@ import { CategoryService } from '../services/category.service';
 import { CreateCategoryDto } from '../dtos/create-category.dto';
 import { UpdateCategoryDto } from '../dtos/update-category.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from '../../../common/decorators/user/user.decorator';
 
 @Controller('categories')
 @ApiTags('Category')
@@ -23,8 +24,8 @@ export class CategoryController {
   }
 
   @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  findAll(@User() userId: string) {
+    return this.categoryService.findAll(userId);
   }
 
   @Get(':id')

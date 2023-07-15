@@ -15,8 +15,11 @@ export class CategoryService {
     return new this.categoryModel(createCategoryDto).save();
   }
 
-  findAll(): Promise<Category[]> {
-    return this.categoryModel.find();
+  async findAll(userId: string): Promise<Category[]> {
+    const defaultCategories = await this.findAllDefaultCategories();
+    const userCategories = await this.categoryModel.find({ userId });
+
+    return [...defaultCategories, ...userCategories];
   }
 
   findOne(id: string): Promise<Category> {
@@ -29,5 +32,9 @@ export class CategoryService {
 
   remove(_id: string) {
     return this.categoryModel.deleteOne({ _id });
+  }
+
+  findAllDefaultCategories(): Promise<Category[]> {
+    return this.categoryModel.find({ userId: { $eq: null } });
   }
 }

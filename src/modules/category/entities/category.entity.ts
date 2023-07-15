@@ -9,7 +9,7 @@ export class Category {
   description: string;
 
   @Prop()
-  user: string;
+  userId: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
