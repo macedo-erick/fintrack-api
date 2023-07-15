@@ -21,7 +21,7 @@ export class AuthService {
   async signIn(authDto: AuthDto, res: Response) {
     const user = await this.userService.findByEmail(authDto.email);
 
-    if (!user)
+    if (!user) {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
@@ -30,29 +30,37 @@ export class AuthService {
         },
         HttpStatus.NOT_FOUND,
       );
+    }
 
-    if (!this.encryptService.compare(authDto.password, user.password))
+    const validPassword = this.encryptService.compare(
+      authDto.password,
+      user.password,
+    );
+
+    if (!validPassword) {
       throw new UnauthorizedException({
         error: 'Password mismatch',
         timestamp: new Date().getTime(),
       });
+    }
 
     const payload = { id: user.id, email: user.email };
-
     const jwt = await this.jwtService.signAsync(payload);
 
-    res.cookie('SESSION_ID', jwt);
-
-    return res.status(200).send({
-      access_token: jwt,
-      expires_in: parseInt(process.env.JWT_EXPIRES),
-      token_type: 'Bearer',
-    });
+    return res
+      .cookie('SESSION_ID', jwt)
+      .status(200)
+      .send({
+        access_token: jwt,
+        expires_in: parseInt(process.env.JWT_EXPIRES),
+        token_type: 'Bearer',
+      });
   }
 
   signOut(res: Response) {
-    res.cookie('SESSION_ID', null);
-
-    return res.status(200).send({ message: 'User signed out successfully' });
+    return res
+      .cookie('SESSION_ID', null)
+      .status(200)
+      .send({ message: 'User signed out successfully' });
   }
 }
