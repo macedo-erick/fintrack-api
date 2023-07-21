@@ -9,7 +9,7 @@ export class Tag {
   description: string;
 
   @Prop()
-  user: string;
+  userId: string;
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);

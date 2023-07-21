@@ -13,8 +13,8 @@ export class TagService {
     return new this.tagModel(createTagDto).save();
   }
 
-  findAll(): Promise<Tag[]> {
-    return this.tagModel.find();
+  findAll(userId: string): Promise<Tag[]> {
+    return this.tagModel.find({ userId });
   }
 
   findOne(id: number): Promise<Tag> {

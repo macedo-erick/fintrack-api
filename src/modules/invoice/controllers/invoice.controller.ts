@@ -22,11 +22,6 @@ export class InvoiceController {
     return this.invoiceService.create(createInvoiceDto);
   }
 
-  @Get()
-  findAll() {
-    return this.invoiceService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.invoiceService.findOne(id);

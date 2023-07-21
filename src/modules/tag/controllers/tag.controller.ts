@@ -11,6 +11,7 @@ import { TagService } from '../services/tag.service';
 import { CreateTagDto } from '../dtos/create-tag.dto';
 import { UpdateTagDto } from '../dtos/update-tag.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from '../../../common/decorators/user/user.decorator';
 
 @Controller('tags')
 @ApiTags('Tag')
@@ -18,13 +19,13 @@ export class TagController {
   constructor(private readonly tagService: TagService) {}
 
   @Post()
-  create(@Body() createTagDto: CreateTagDto) {
-    return this.tagService.create(createTagDto);
+  create(@User() userId: string, @Body() createTagDto: CreateTagDto) {
+    return this.tagService.create({ ...createTagDto, userId });
   }
 
   @Get()
-  findAll() {
-    return this.tagService.findAll();
+  findAll(@User() userId: string) {
+    return this.tagService.findAll(userId);
   }
 
   @Get(':id')
